@@ -1,0 +1,236 @@
+.laptopContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+  overflow: visible;
+}
+
+.laptop3d {
+  position: relative;
+  width: 320px;
+  height: 210px;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.1s ease-out;
+}
+
+/* Floating shadow/glow plates underneath the laptop - matching the mockup's stacked depth */
+.shadowPlate1 {
+  position: absolute;
+  inset: -25px -35px;
+  border-radius: 40px;
+  background: radial-gradient(circle, rgba(63, 174, 106, 0.15) 0%, rgba(63, 174, 106, 0.0) 70%);
+  transform: translateZ(-35px);
+  filter: blur(16px);
+  pointer-events: none;
+}
+
+.shadowPlate2 {
+  position: absolute;
+  inset: -12px -16px;
+  border-radius: 28px;
+  background: rgba(196, 162, 101, 0.06);
+  border: 1.5px solid rgba(196, 162, 101, 0.15);
+  transform: translateZ(-22px) rotateZ(1deg);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+.shadowPlate3 {
+  position: absolute;
+  inset: -4px -4px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transform: translateZ(-10px);
+  box-shadow: 0 8px 32px 0 rgba(46, 74, 63, 0.08);
+  pointer-events: none;
+}
+
+/* Glassmorphic Laptop Base (Chassis) */
+.base {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.75); /* Frosted white glass chassis */
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  transform-style: preserve-3d;
+  box-shadow: 0 10px 30px rgba(46, 74, 63, 0.12),
+              inset 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Side panels to give the glass base real 3D thickness */
+.sideFront {
+  position: absolute;
+  left: -0.5px;
+  right: -0.5px;
+  bottom: 0;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  transform-origin: bottom center;
+  transform: rotateX(-90deg);
+}
+
+.sideLeft {
+  position: absolute;
+  left: 0;
+  top: -0.5px;
+  bottom: -0.5px;
+  width: 8px;
+  background: rgba(255, 255, 255, 0.6);
+  border-left: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+  transform-origin: left center;
+  transform: rotateY(-90deg);
+}
+
+.sideRight {
+  position: absolute;
+  right: 0;
+  top: -0.5px;
+  bottom: -0.5px;
+  width: 8px;
+  background: rgba(255, 255, 255, 0.6);
+  border-right: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+  transform-origin: right center;
+  transform: rotateY(90deg);
+}
+
+/* Keyboard recession area - Glass forest green */
+.keyboardArea {
+  position: absolute;
+  inset: 12px 16px 20px 16px;
+  background: rgba(46, 74, 63, 0.85); /* Semi-transparent forest green */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.25);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Key Grid */
+.keyRow {
+  display: flex;
+  gap: 3px;
+  height: 12%;
+  width: 100%;
+}
+
+.key {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.22); /* Translucent keys */
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Glowing green trackpad */
+.trackpad {
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 4px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Screen Lid */
+.lid {
+  position: absolute;
+  inset: 0;
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Outside Face (Aluminum / Frosted white glass back) - Visible when laptop is closed */
+.lidBack {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.85); /* Premium white glass back */
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 14px;
+  transform: translateZ(1px); /* Facing +Z (pointing up when closed) */
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(46, 74, 63, 0.08);
+}
+
+/* Inside screen face - Visible when laptop is open */
+.screenFace {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.9); /* Premium white glass bezel */
+  border: 5px solid rgba(255, 255, 255, 0.95);
+  border-radius: 14px;
+  /* Correct orientation: rotated 180deg around Y axis so it lies face-down (pointing -Z when closed)
+     and swings up to be right-side up to the viewer when open. */
+  transform: rotateY(180deg) translateZ(1px); 
+  backface-visibility: hidden;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.05),
+              0 4px 20px rgba(46, 74, 63, 0.08);
+}
+
+/* Glowing code content area - Light-themed IDE */
+.screenViewport {
+  flex: 1;
+  margin: 4px;
+  border-radius: 6px;
+  background: #f4f6f5; /* Light soft cream background */
+  border: 1px solid rgba(63, 174, 106, 0.2);
+  padding: 10px;
+  font-family: var(--font-mono), monospace;
+  color: #2e4a3f; /* Deep brand forest green */
+  font-size: 8px;
+  line-height: 1.4;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Glowing brand logo on the back of the lid */
+.lidLogo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(63, 174, 106, 0.15) 0%, rgba(63, 174, 106, 0.0) 70%);
+  border: 1.5px solid rgba(63, 174, 106, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono), monospace;
+  font-weight: bold;
+  font-size: 14px;
+  color: #2e4a3f;
+  text-shadow: 0 0 8px rgba(63, 174, 106, 0.4);
+  box-shadow: 0 0 15px rgba(63, 174, 106, 0.1);
+}
